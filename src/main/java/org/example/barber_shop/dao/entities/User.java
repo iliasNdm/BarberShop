@@ -22,8 +22,12 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    private boolean newsletterSubscribed = false;
+
     // Un user en tant que CLIENT peut avoir plusieurs rendez-vous
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
     private List<Appointment> appointmentsAsClient;
