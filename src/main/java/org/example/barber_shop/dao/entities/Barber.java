@@ -3,7 +3,8 @@ package org.example.barber_shop.dao.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Getter
@@ -17,13 +18,16 @@ public class Barber {
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id" )
     private User user;
 
     private double salary;
-    private Date hireDate;
+    private LocalDateTime hireDate;
 
-    public Barber(User user, double salary, Date hireDate) {
+    @OneToMany(mappedBy = "barber", fetch = FetchType.LAZY)
+    private List<Appointment> appointments;
+
+    public Barber(User user, double salary, LocalDateTime hireDate) {
         this.user = user;
         this.salary = salary;
         this.hireDate = hireDate;

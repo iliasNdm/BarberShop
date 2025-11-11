@@ -16,7 +16,7 @@ public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    String name;
-    Integer durationMinutes;
-    Double price;
+    private String name;
+    private Integer durationMinutes;
+    private Double price;
 }

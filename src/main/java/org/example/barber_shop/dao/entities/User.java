@@ -3,7 +3,7 @@ package org.example.barber_shop.dao.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Getter
@@ -22,7 +22,11 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+    // Un user en tant que CLIENT peut avoir plusieurs rendez-vous
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+    private List<Appointment> appointmentsAsClient;
 
     public boolean isBarber() {
         return this.role == UserRole.BARBER;
