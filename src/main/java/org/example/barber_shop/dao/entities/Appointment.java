@@ -28,9 +28,9 @@ public class Appointment {
     @ToString.Exclude
     private Barber barber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "service_id", nullable = false)
-    private Service service;
+    // Liste des services choisis pour ce rendez-vous
+    @OneToMany(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppointmentService> services = new ArrayList<>();
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
