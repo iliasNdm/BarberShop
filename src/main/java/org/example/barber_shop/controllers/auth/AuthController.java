@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.barber_shop.dto.request.LoginRequest;
 import org.example.barber_shop.dto.request.RegisterRequest;
 import org.example.barber_shop.dto.response.AuthResponse;
-import org.example.barber_shop.service.AuthService;
+import org.example.barber_shop.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -9,8 +9,8 @@ import lombok.Data;
 public class ServiceCreationRequest {
     @NotBlank(message = "Service name is required.")
     private String name;
-    @NotBlank(message = "Description is required.")
-    private String description;
+//    @NotBlank(message = "Description is required.")
+//    private String description;
     @NotNull(message = "Duration is required.")
     @Min(value = 15, message = "Duration must be at least 15 minutes.")
     private Integer durationMinutes;

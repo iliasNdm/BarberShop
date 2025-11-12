@@ -1,4 +1,4 @@
-package org.example.barber_shop.service;
+package org.example.barber_shop.service.auth;
 
 import org.example.barber_shop.dto.request.LoginRequest;
 import org.example.barber_shop.dto.request.RegisterRequest;
