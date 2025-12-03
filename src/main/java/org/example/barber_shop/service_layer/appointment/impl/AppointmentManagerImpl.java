@@ -16,16 +16,21 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Service
 public class AppointmentManagerImpl implements AppointmentManager {
     private final AppointmentRepository appointmentRepository;
-    private final BarberManager barberManager;
-    private final UserRepository userRepository = null;
-    private final ServiceRepository serviceRepository = null;
-    private final AppointmentServiceRepository appointmentServiceRepository = null;
+    private final AppointmentServiceRepository appointmentServiceRepository;
+    private final UserRepository userRepository;
+    private final ServiceRepository serviceRepository;
     private final BarberRepository barberRepository;
 
 
-    public AppointmentManagerImpl(AppointmentRepository appointmentRepository, BarberManager barberManager, BarberRepository barberRepository) {
+    public AppointmentManagerImpl(AppointmentRepository appointmentRepository,
+                                  AppointmentServiceRepository appointmentServiceRepository,
+                                  UserRepository userRepository,
+                                  ServiceRepository serviceRepository,
+                                  BarberRepository barberRepository) {
         this.appointmentRepository = appointmentRepository;
-        this.barberManager = barberManager;
+        this.appointmentServiceRepository = appointmentServiceRepository;
+        this.userRepository = userRepository;
+        this.serviceRepository = serviceRepository;
         this.barberRepository = barberRepository;
     }
 
