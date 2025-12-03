@@ -1,5 +1,5 @@
 package org.example.barber_shop.dao.entities;
 
 public enum AppointmentStatus {
-    PENDING, CONFIRMED, CANCELED,DONE;
+    PENDING, CONFIRMED, CANCELLED,DONE;
 }
