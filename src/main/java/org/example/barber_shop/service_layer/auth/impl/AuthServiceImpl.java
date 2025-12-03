@@ -1,4 +1,4 @@
-package org.example.barber_shop.service.auth.impl;
+package org.example.barber_shop.service_layer.auth.impl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.example.barber_shop.dao.entities.User;
@@ -8,7 +8,7 @@ import org.example.barber_shop.dto.request.RegisterRequest;
 import org.example.barber_shop.dto.response.AuthResponse;
 import org.example.barber_shop.dao.repositories.UserRepository;
 import org.example.barber_shop.security.jwt.JwtService;
-import org.example.barber_shop.service.auth.AuthService;
+import org.example.barber_shop.service_layer.auth.AuthService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -33,7 +33,9 @@ public class Appointment {
     private List<AppointmentService> services = new ArrayList<>();
 
     private LocalDateTime startTime;
-//    private LocalDateTime endTime;
+    private LocalDateTime endTime;
+
+
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status; // PENDING, CONFIRMED, CANCELLED, DONE
 

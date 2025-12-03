@@ -5,12 +5,18 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 public class AppointmentCreationRequest {
-    @NotNull(message = "Select a barber")
-    Long barberId;
 
+    @NotNull(message = "Select a barber")
+    private Long barberId;
+
+    @NotNull(message = "Select a valid time")
     @Future(message = "Select a valid time")
-    LocalDateTime dateTime;
-    Long serviceId;
+    private LocalDateTime dateTime;
+
+    @NotNull(message = "Select at least one service")
+    private List<Long> serviceIds;
 }

@@ -1,4 +1,4 @@
-package org.example.barber_shop.service.appointment;
+package org.example.barber_shop.service_layer.appointment;
 
 import org.example.barber_shop.dto.appointment.AppointmentCreationRequest;
 import org.example.barber_shop.dto.appointment.AppointmentResponse;
