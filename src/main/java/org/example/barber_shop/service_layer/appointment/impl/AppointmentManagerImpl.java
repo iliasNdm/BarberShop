@@ -217,8 +217,4 @@ public class AppointmentManagerImpl implements AppointmentManager {
                 })
                 .collect(Collectors.toList());
     }
-
-
-
-
 }
