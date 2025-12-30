@@ -8,6 +8,7 @@ import org.example.barber_shop.dao.repositories.BarberRepository;
 import org.example.barber_shop.dao.repositories.UserRepository;
 import org.example.barber_shop.dto.barber.BarberCreationRequest;
 import org.example.barber_shop.dto.barber.BarberInternalDTO;
+import org.example.barber_shop.dto.barber.BarberResponse;
 import org.example.barber_shop.service_layer.barber.BarberManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class BarberManagerImpl implements BarberManager {
     private final BarberRepository barberRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final org.example.barber_shop.mappers.BarberMapper barberMapper;
 
     @Override
     @Transactional
@@ -59,8 +61,10 @@ public class BarberManagerImpl implements BarberManager {
     }
 
     @Override
-    public List<Barber> getAllBarbers() {
-        return barberRepository.findAll();
+    public List<BarberResponse> getAllBarbers() {
+        return barberRepository.findAll().stream()
+                .map(barberMapper::toResponse)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Override

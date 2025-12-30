@@ -7,8 +7,12 @@ import java.util.*;
 
 public interface BarberManager {
     Barber createBarber(BarberCreationRequest request);
+
     BarberInternalDTO getBarberById(Long id);
-    List<Barber> getAllBarbers();
+
+    List<BarberResponse> getAllBarbers();
+
     BarberInternalDTO updateBarber(Long id, BarberCreationRequest request);
+
     void deleteBarber(Long id);
 }
