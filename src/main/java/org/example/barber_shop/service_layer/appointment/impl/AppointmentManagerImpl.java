@@ -123,23 +123,12 @@ public class AppointmentManagerImpl implements AppointmentManager {
 
     @Override
     @Transactional
-    public Boolean cancelAppointment(Long appointmentId) {
-        //Récupération du rendez-vous
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+    public Boolean cancelAppointment(Long appointmentId, Long clientId) {
+
+        Appointment appointment = appointmentRepository
+                .findByIdAndClient_Id(appointmentId, clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found."));
 
-
-        if (appointment.getStatus() == AppointmentStatus.CANCELLED
-                || appointment.getStatus() == AppointmentStatus.DONE) {
-            return false;
-        }
-
-        //  (à implementer apres) : empêcher l'annulation si le rendez-vous a déjà commencé
-        // if (appointment.getStartTime().isBefore(LocalDateTime.now())) {
-        //     return false;
-        // }
-
-        // 4) Annuler le rendez-vous
         appointment.setStatus(AppointmentStatus.CANCELLED);
         appointmentRepository.save(appointment);
 
@@ -147,33 +136,56 @@ public class AppointmentManagerImpl implements AppointmentManager {
     }
     @Override
     @Transactional
-    public AppointmentResponse updateAppointmentTime(Long appointmentId, LocalDateTime newDateTime) {
+    public AppointmentResponse updateAppointmentTime(Long appointmentId,
+                                                     LocalDateTime newDateTime,
+                                                     Long clientId) {
 
-        Appointment appointment = appointmentRepository.findById(appointmentId)
+        Appointment appointment = appointmentRepository
+                .findByIdAndClient_Id(appointmentId, clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found."));
 
-        // empêcher la modif si déjà annulé ou terminé
+
         if (appointment.getStatus() == AppointmentStatus.CANCELLED
                 || appointment.getStatus() == AppointmentStatus.DONE) {
             throw new IllegalStateException("Cannot update time of a cancelled or done appointment.");
         }
-
 
         int totalDuration = appointment.getServices().stream()
                 .map(AppointmentService::getService)
                 .mapToInt(Service::getDurationMinutes)
                 .sum();
 
+        appointment.setStartTime(newDateTime);
+        appointment.setEndTime(newDateTime.plusMinutes(totalDuration));
 
-        LocalDateTime newStartTime = newDateTime;
-        LocalDateTime newEndTime = newStartTime.plusMinutes(totalDuration);
-
-        appointment.setStartTime(newStartTime);
-        appointment.setEndTime(newEndTime);
         appointmentRepository.save(appointment);
 
         return getAppointmentDetails(appointment.getId());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponse> findMyAppointments(Long clientId) {
+        return appointmentRepository.findByClient_IdOrderByStartTimeAsc(clientId)
+                .stream()
+                .map(a -> new AppointmentResponse(
+                        a.getId(),
+                        a.getStartTime(),
+                        a.getStatus(),
+                        a.getBarber().getUser().getFirstName(),
+                        a.getServices().stream()
+                                .map(AppointmentService::getService)
+                                .map(s -> new ServiceResponse(
+                                        s.getId(),
+                                        s.getName(),
+                                        s.getDurationMinutes(),
+                                        s.getPrice()
+                                ))
+                                .toList()
+                ))
+                .toList();
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<AppointmentResponse> findAppointmentByBarberId(Long barberId) {
